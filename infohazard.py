@@ -1,8 +1,5 @@
 try:
     import weechat
-    version = weechat.info_get("version_number", "") or 0
-    if int(version) < 0x00020800:
-        raise RuntimeError("This plugin requires weechat >= 2.8")
 except ImportError:
     print("This script must be run under WeeChat.")
     print("Get WeeChat now at: http://www.weechat.org/")
@@ -15,6 +12,12 @@ SCRIPT_LICENSE = "MIT"
 SCRIPT_DESC    = "Control information you don't want shown in your buffer"
 
 weechat.register(SCRIPT_NAME, SCRIPT_AUTHOR, SCRIPT_VERSION, SCRIPT_LICENSE, SCRIPT_DESC, '', 'utf-8')
+
+version = weechat.info_get("version_number", "") or 0
+if int(version) < 0x00020800:
+    msg = f"This plugin requires weechat >= 2.8, found version {version}"
+    raise RuntimeError(msg)
+
 
 # TODO:
 # * allow ignoring nicks on specific servers
