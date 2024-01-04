@@ -34,7 +34,7 @@ def maybe_ignore(data: str, modifier: str, modifier_data: str, msg: str):
 
     is_action = any(t == "irc_action" for t in tags)
     is_privmsg = any(t == "irc_privmsg" for t in tags)
-    nick = next((t for t in tags if t.startswith("nick_")), "").lstrip("nick_")
+    nick = next((t for t in tags if t.startswith("nick_")), "")[5:]
 
     if is_privmsg and nick in IGNORE_NICKS:
         if is_action:
