@@ -14,8 +14,8 @@ SCRIPT_DESC    = "Control information you don't want shown in your buffer"
 weechat.register(SCRIPT_NAME, SCRIPT_AUTHOR, SCRIPT_VERSION, SCRIPT_LICENSE, SCRIPT_DESC, '', 'utf-8')
 
 version = weechat.info_get("version_number", "") or 0
-if int(version) < 0x00020800:
-    msg = f"This plugin requires weechat >= 2.8, found version {version}"
+if int(version) <= 0x00020800:
+    msg = f"This plugin requires weechat > 2.8, found version {version}"
     raise RuntimeError(msg)
 
 
@@ -29,7 +29,8 @@ IGNORED_MSG_TEXT = weechat.config_get_plugin("cloaked_text") or "x"
 
 def maybe_ignore(data: str, modifier: str, modifier_data: str, msg: str):
     # NOTE: this layout changed after weechat version 2.8
-    plugin, buffer_name, rawtags = modifier_data.split(';', maxsplit=2)
+    #plugin, buffer_name, rawtags = modifier_data.split(';', maxsplit=2)
+    buffer_name, rawtags = modifier_data.split(';', maxsplit=2)
     tags = rawtags.split(',')
 
     is_action = any(t == "irc_action" for t in tags)
